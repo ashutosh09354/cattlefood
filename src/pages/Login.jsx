@@ -1,4 +1,4 @@
-import { useState } from "react";
+ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SEO from "../components/SEO.jsx";
 import Icon from "../components/Icon.jsx";
@@ -77,7 +77,7 @@ export default function Login() {
         <form onSubmit={submit}>
           {/* Email Address Field */}
           <div className="auth-field">
-            <label htmlFor="auth-email">Email Address</label>
+            <label htmlFor="auth-email" className="expressive-bold">Email Address</label>
             <div className="auth-input-wrap">
               <span className="auth-input-icon">
                 <Icon name="mail" size={18} />

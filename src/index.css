@@ -337,6 +337,14 @@ a.cat{display:block}.ben span b{display:block}
 }
 
 /* Auth / Login & Signup Pages */
+
+/* Expressive bold style */
+.expressive-bold {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--brown);
+}
+
 .auth-page{max-width:480px;margin:24px auto 64px;padding:0 16px}
 .auth-card{background:var(--white);border:1px solid var(--line);border-radius:24px;padding:36px 32px;box-shadow:0 8px 30px rgba(74,33,15,.06);position:relative}
 .auth-avatar{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#FFF3E0 0%,#FFE0B2 100%);color:var(--orange);display:grid;place-items:center;margin:0 auto 16px;border:1px solid rgba(255,101,0,.2);box-shadow:0 4px 12px rgba(255,101,0,.15)}
