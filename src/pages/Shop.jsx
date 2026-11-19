@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import SEO from "../components/SEO.jsx";
 import ProductCard from "../components/ProductCard.jsx";
@@ -11,6 +11,13 @@ const categoryIcons = { "Cattle Feed": "🐄", "Buffalo Feed": "🐃", "Goat & S
 export default function Shop() {
   const [sp, setSp] = useSearchParams();
   const q = sp.get("q") || "", cat = sp.get("cat") || "";
+const [suggestions, setSuggestions] = useState([]);
+const [showSuggestions, setShowSuggestions] = useState(false);
+const setQ = (value) => {
+  const n = new URLSearchParams(sp);
+  value ? n.set("q", value) : n.delete("q");
+  setSp(n);
+};
   const [max, setMax] = useState(4000);
   const [rating, setRating] = useState(0);
   const [stock, setStock] = useState(false);
@@ -20,9 +27,67 @@ export default function Shop() {
   const setCat = (c) => { const n = new URLSearchParams(sp); c ? n.set("cat", c) : n.delete("cat"); setSp(n); };
   const resetFilters = () => { setCat(""); setMax(4000); setRating(0); setStock(false); setSort("pop"); };
 
+useEffect(() => {
+  if (q.trim()) {
+    const filtered = products
+      .filter(p => p.name.toLowerCase().includes(q.toLowerCase()))
+      .slice(0, 5);
+    setSuggestions(filtered);
+  } else {
+    setSuggestions([]);
+  }
+}, [q]);
+
   return <section>
     <SEO title="Shop" description="Browse cattle, buffalo, goat, poultry feed and mineral mixtures." />
-    <h2>All Products</h2><p className="sub">Home / Shop · Showing {Math.min(shown, list.length)} of {list.length} products</p>
+    <h2>All Products</h2>
+        {/* Search Bar */}
+        <div className="search-bar" style={{ marginBottom: "16px", position: "relative" }}>
+          <input
+            type="search"
+            placeholder="Search products..."
+            value={q}
+            onChange={(e) => { setQ(e.target.value); setShowSuggestions(true); }}
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+            className="search-input"
+            style={{
+              width: "100%",
+              padding: "8px 12px",
+              border: `1px solid var(--line)`,
+              borderRadius: "8px",
+              boxSizing: "border-box"
+            }}
+          />
+          {showSuggestions && suggestions.length > 0 && (
+            <ul className="search-suggestions" style={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              right: 0,
+              background: "var(--white)",
+              border: `1px solid var(--line)`,
+              borderRadius: "0 0 8px 8px",
+              maxHeight: "150px",
+              overflowY: "auto",
+              zIndex: 10,
+              margin: 0,
+              padding: 0,
+              listStyle: "none"
+            }}>
+              {suggestions.map((s) => (
+                <li
+                  key={s.id}
+                  onMouseDown={() => { setQ(s.name); setShowSuggestions(false); }}
+                  style={{ padding: "8px 12px", cursor: "pointer" }}
+                >
+                  {s.name}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
     <div className="shop">
       <aside className="side" aria-label="Product filters">
         <div className="filter-header"><svg className="filter-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18l-7 8v6l-4 2v-8L3 4Z" /></svg><h4>Filter Products</h4></div>
