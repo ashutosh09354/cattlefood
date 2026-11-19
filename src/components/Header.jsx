@@ -5,7 +5,7 @@ import { useStore } from "../context/StoreContext.jsx";
 import { CATEGORIES } from "../data/products.js";
 
 export default function Header() {
-  const { count, user } = useStore();
+  const { count, user, wish } = useStore();
   const nav = useNavigate();
   const [sp] = useSearchParams();
   const [open, setOpen] = useState(false);
@@ -33,7 +33,10 @@ export default function Header() {
             value={sp.get("q") || ""} onChange={(e) => nav(`/shop?q=${encodeURIComponent(e.target.value)}`, { replace: true })} />
         </div>
         <button className="cartbtn" onClick={account} aria-label="Account"><Icon name="user" size={22} /></button>
-        <button className="cartbtn" onClick={account} aria-label="Wishlist"><Icon name="heart" size={22} /></button>
+        <button className="cartbtn" onClick={() => nav("/wishlist")} aria-label="Wishlist">
+          <Icon name="heart" size={22} />
+          {wish && wish.length > 0 && <b>{wish.length}</b>}
+        </button>
         <button className="cartbtn" onClick={() => nav("/cart")} aria-label="Cart">
           <Icon name="cart" size={22} />{count > 0 && <b>{count}</b>}
         </button>

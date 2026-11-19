@@ -70,10 +70,10 @@ export default function About() {
       link: "/shop?cat=Buffalo%20Feed",
     },
     {
-      img: "/assets/images/category-2.jpg",
-      title: "Chelated Mineral Mixtures",
-      desc: "Enriched with bio-available trace minerals and vitamins to reduce inter-calving periods, enhance conception rates, and strengthen hooves.",
-      link: "/shop?cat=Mineral%20Mixture",
+      img: "/assets/images/product-poultry-feed.jpg",
+      title: "Poultry Feeds & Nutrition",
+      desc: "High-protein starter and layer rations with balanced calcium to maximize egg production, chick growth, and flock vitality.",
+      link: "/shop?cat=Poultry%20Feed",
     },
     {
       img: "/assets/images/category-4.jpg",

@@ -8,7 +8,6 @@ import { IM } from "../data/images.js";
 import { inr, stars } from "../utils/currency.js";
 import { useStore } from "../context/StoreContext.jsx";
 
-const views = ["Product Pack", "Livestock", "Pellet Texture"];
 const tabs = [["desc", "Description"], ["nut", "Nutritional Information"], ["ing", "Ingredients"], ["rev", "Reviews"]];
 
 export default function ProductDetails() {
@@ -17,9 +16,8 @@ export default function ProductDetails() {
   const { add, wish, toggleWish } = useStore();
   const [tab, setTab] = useState("desc");
   const [qty, setQty] = useState(1);
-  const [gi, setGi] = useState(0);
-  useEffect(() => { setTab("desc"); setQty(1); setGi(0); }, [id]);
-  const p = products[Number(id) - 1];
+  useEffect(() => { setTab("desc"); setQty(1); }, [id]);
+  const p = products.find((x) => x.id === Number(id));
 
   if (!p) return (<section><SEO title="Product not found" /><h2>Product not found</h2><Link className="btn" to="/shop">Back to shop</Link></section>);
 
@@ -35,11 +33,7 @@ export default function ProductDetails() {
     rev: <><p><span className="star">{stars(p.rating)}</span> {p.rating} from {p.rev} verified customer ratings.</p><p>“Animals took to this feed readily within days. Visible increase in milk fat and solid content.” — Ramesh Yadav, Karnal, Haryana</p></>,
   }[tab];
 
-  const gallery = [
-    IM.p[p.cat] || IM.p["Cattle Feed"],
-    "/assets/images/category-0.jpg",
-    "/assets/images/category-1.jpg",
-  ];
+  const packImg = (IM.product && IM.product[p.name]) || IM.p[p.cat] || IM.p["Cattle Feed"];
 
   return (
     <section>
@@ -47,8 +41,7 @@ export default function ProductDetails() {
       <p className="sub"><Link to="/">Home</Link> / <Link to="/shop">Shop</Link> / {p.cat}</p>
       <div className="pd">
         <div className="gal">
-          <div className="pimg big"><img src={gallery[gi]} alt={`${p.name} - ${views[gi]}`} /></div>
-          <div className="th">{views.map((t, i) => (<button key={t} className={gi === i ? "on" : ""} onClick={() => setGi(i)}>{t}</button>))}</div>
+          <div className="pimg big"><img src={packImg} alt={`${p.name} - Product Pack`} /></div>
         </div>
         <div>
           <h2>{p.name}</h2>

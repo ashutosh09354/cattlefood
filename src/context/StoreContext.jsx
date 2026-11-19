@@ -31,7 +31,13 @@ export function StoreProvider({ children }) {
   const changeQty = (id, d) => setCart((c) => c.map((x) => (x.id === id ? { ...x, q: x.q + d } : x)).filter((x) => x.q > 0));
   const remove = (id) => setCart((c) => c.filter((x) => x.id !== id));
   const clearCart = () => setCart([]);
-  const toggleWish = (id) => setWish((w) => (w.includes(id) ? w.filter((x) => x !== id) : [...w, id]));
+  const toggleWish = (id) => {
+    setWish((w) => {
+      const has = w.includes(id);
+      toast(has ? "Removed from wishlist" : "Added to wishlist");
+      return has ? w.filter((x) => x !== id) : [...w, id];
+    });
+  };
   const applyCoupon = (code) => {
     const ok = code.trim().toUpperCase() === "CATTLE10";
     setCoupon(ok ? "CATTLE10" : "");
@@ -39,7 +45,10 @@ export function StoreProvider({ children }) {
   };
   const placeOrder = (o) => { setOrders((x) => [...x, o]); setCart([]); setCoupon(""); };
 
-  const sub = cart.reduce((a, c) => a + products[c.id - 1].price * c.q, 0);
+  const sub = cart.reduce((a, c) => {
+    const item = products.find((p) => p.id === c.id);
+    return a + (item ? item.price * c.q : 0);
+  }, 0);
   const disc = coupon === "CATTLE10" ? Math.round(sub * 0.1) : 0;
   const count = cart.reduce((a, c) => a + c.q, 0);
 

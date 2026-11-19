@@ -25,7 +25,8 @@ export default function Cart() {
       <div className="cart">
         <div>
           {cart.map((c) => {
-            const p = products[c.id - 1];
+            const p = products.find((x) => x.id === c.id);
+            if (!p) return null;
             return (
               <div className="row" key={c.id}>
                 <ProductThumb p={p} />

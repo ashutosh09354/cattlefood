@@ -4,8 +4,7 @@ import Icon from "./Icon.jsx";
 export default function Hero() {
   const images = [
     "/assets/images/image.png",
-    "/assets/images/Premium Poultry Nutrition Banner.png",
-    "/assets/images/new-banner.webp"
+    "/assets/images/Premium Poultry Nutrition Banner.png"
   ];
   const [current, setCurrent] = useState(0);
 

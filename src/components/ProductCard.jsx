@@ -9,7 +9,7 @@ export default function ProductCard({ p }) {
   const d = Math.round((1 - p.price / p.orig) * 100);
   const isBestseller = p.pop > 250;
   const isWishlisted = wish.includes(p.id);
-  const src = IM.p[p.cat] || IM.p["Cattle Feed"];
+  const src = (IM.product && IM.product[p.name]) || IM.p[p.cat] || IM.p["Cattle Feed"];
 
   return (
     <article className="card">

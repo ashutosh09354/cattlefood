@@ -15,7 +15,7 @@ export default function MyAccount() {
     if (name.trim().length < 2) return toast("Enter a name");
     updateName(name.trim()); toast("Profile updated");
   };
-  const list = wish.map((id) => products[id - 1]);
+  const list = (wish || []).map((id) => products.find((p) => p.id === id)).filter(Boolean);
   return (
     <section>
       <SEO title="My Account" />

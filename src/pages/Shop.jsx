@@ -6,7 +6,7 @@ import { products, CATEGORIES } from "../data/products.js";
 import { inr } from "../utils/currency.js";
 
 const sorters = { pop: (a, b) => b.pop - a.pop, lo: (a, b) => a.price - b.price, hi: (a, b) => b.price - a.price, new: (a, b) => Number(b.isNew) - Number(a.isNew) || b.id - a.id };
-const categoryIcons = { "Cattle Feed": "🐄", "Buffalo Feed": "🐃", "Goat & Sheep Feed": "🐐", "Poultry Feed": "🐓", "Mineral Mixture": "◢", "Feed Supplements": "✚" };
+const categoryIcons = { "Cattle Feed": "🐄", "Buffalo Feed": "🐃", "Poultry Feed": "🐓" };
 
 export default function Shop() {
   const [sp, setSp] = useSearchParams();
@@ -39,7 +39,7 @@ useEffect(() => {
 }, [q]);
 
   return <section>
-    <SEO title="Shop" description="Browse cattle, buffalo, goat, poultry feed and mineral mixtures." />
+    <SEO title="Shop" description="Browse cattle, buffalo, and poultry feed." />
     <h2>All Products</h2>
         {/* Search Bar */}
         <div className="search-bar" style={{ marginBottom: "16px", position: "relative" }}>
