@@ -47,7 +47,7 @@ export default function WhyChooseUs() {
           <Reveal key={item.title} variant="fade-up" delay={`${i * 100}ms`}>
             <div className="trust-card">
               <div className="trust-icon-box">
-                <Icon name={item.icon} size={28} />
+                <Icon name={item.icon} size={22} />
               </div>
               <h3 className="trust-card-title">{item.title}</h3>
               <p className="trust-card-desc">{item.desc}</p>
